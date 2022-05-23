@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using karma.DAL;
+using karma.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,15 @@ namespace karma.Controllers
 {
     public class HomeController : Controller
     {
+        private AppDbContext _context { get; }
+        public HomeController(AppDbContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
-            return View();
+            List<Slider> sliders = _context.Sliders.ToList();
+            return View(sliders);
         }
         public IActionResult Contact()
         {
